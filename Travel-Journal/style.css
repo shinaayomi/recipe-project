@@ -1,0 +1,83 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 0 20px;
+    color: #2B283A;    
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+
+.navbar {
+    height: 50px;
+    background: lightcoral;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+.navbar > h1 {
+    font-size: 1rem
+}
+
+img {
+    max-width: 100%;
+}
+
+.card--list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.card {
+    max-width: 100%;
+    width: 470px;
+    height: 170px;
+    border: 2px solid red;
+    display: flex;
+    gap: 10px;
+    flex: auto;
+    margin-top: 40px;
+}
+
+.card--image {
+    width: 125px;
+    height: 168px;
+    border-radius: 5px;
+}
+
+.location {
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0.17em;
+    margin-right: 8px;
+}
+
+.url--link {
+    color: #918E9B;
+    text-decoration-line: underline;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.title {
+    font-size: 1.5rem;
+    line-height: 30px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.date {
+    font-weight: 700;
+}
+
+.description {
+    font-size: 10px;
+    line-height: 150%;
+    margin-top: 10px;
+}
