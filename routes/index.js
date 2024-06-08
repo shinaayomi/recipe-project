@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
 });
 
 router.all('*', (req, res) => {
-    res.status(404).json({ status: "error", message: "Endpoint functionality is not available" })
+    res.status(404).json({ status: "error", message: `Can't find ${req.originalUrl} on the server` })
 });
 
 module.exports = router;
