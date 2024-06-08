@@ -5,6 +5,8 @@ const app = express();
 app.use(express.json({ limit: "5mb" }));
 app.use(morgan("dev"));
 
+app.disable("x-powered-by"); // to disable express server fingerprinting
+
 const indexRoutes = require("./routes");
 
 app.use("/api/v1", indexRoutes);
