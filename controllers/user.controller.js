@@ -1,8 +1,8 @@
 const bcrypt = require("bcryptjs");
-const validator = require("express-validator");
+const jwt = require("jsonwebtoken");
 const User = require("../model/user.model");
 const logger = require("../utils/logger");
-const generateTokenAndSetCookie = require("../utils/generateToken");
+const config = require("../utils/config");
 
 // @desc register new user controller logic
 const signup = async (req, res) => {
@@ -38,38 +38,46 @@ const signup = async (req, res) => {
 
     } catch (error) {
         logger.error("Error Occured in signup controller", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ success: "error", message: "Internal Server Error" });
     }
 };
 
 // @desc login user controller logic
 const login = async (req, res) => {
     try {
-        const { name, password } = req.body;
+        const { email, password } = req.body;
 
-        const user = await User.findOne({ name });
+        // check if user email exists in db
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ status: "error", message: "Invalid email or password" });
+        };
 
         // check if password is correct with the one in DB
-        const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
-        if (!user || !isPasswordCorrect) {
-            return res.status(400).json({ status: "error", error: "Invalid username or password" });
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        if (!isPasswordCorrect) {
+            return res.status(400).json({ status: "error", message: "Invalid email or password" });
         };
 
         // generate token as cookie
-        generateTokenAndSetCookie(user._id, res);
+        const accessToken = await jwt.sign({ id: user._id }, config.JWT_SECRET, { expiresIn: 5 * 60 })
 
         res.status(200).json({
             status: "success",
             message: "Login successful",
             data: {
-                _id: user._id,
-                name: user.name,
+                accessToken, 
+                user: {
+                    _id: user._id,
+                    fullName: user.fullName,
+                    email: user.email
+                }
             }
         });
 
     } catch (error) {
         logger.error("Error occured in login controller", error);
-        res.status(500).json({ status: "error", error: "Internal Server Error" });
+        res.status(500).json({ status: "error", message: "Internal Server Error" });
     }
 };
 
