@@ -59,7 +59,7 @@ const login = async (req, res) => {
             return res.status(400).json({ status: "error", message: "Invalid email or password" });
         };
 
-        // generate token as cookie
+        // generate token
         const accessToken = await jwt.sign({ id: user._id }, config.JWT_SECRET, { expiresIn: 5 * 60 })
 
         res.status(200).json({
