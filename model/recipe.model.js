@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ingridientSchema = new mongoose.Schema({
+const ingredientSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -31,7 +31,7 @@ const recipeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ingridients: [ingridientSchema],
+    ingredients: [ingredientSchema],
     instructions: [instructionSchema],
     prepTime: {
         type: Number, // in minutes
