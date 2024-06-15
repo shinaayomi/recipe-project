@@ -14,7 +14,9 @@ const validate = (req, res, next) => {
             message: "Validation Error",
             data: errorObj,
         })
-    }
+    };
+
+    next();
 };
 
 const validateSignUp = [
