@@ -13,7 +13,17 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
-});
+    },
+    recipes: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "Recipe"
+        }
+    ],
+},
+{
+    timestamps: { createdAt: "Date_Created", updatedAt: "Date_Updated" }
+}
+);
 
 module.exports = mongoose.model("User", userSchema);
