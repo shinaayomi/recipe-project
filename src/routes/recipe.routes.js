@@ -5,7 +5,7 @@ const restrictToOwner = require("../middleware/restrict.middleware");
 const router = express.Router();
 
 router.post("/", auth, createRecipe);
-router.get("/", auth, getAllRecipes);
+router.get("/", getAllRecipes);
 router.get("/:recipeId", auth, getRecipeById);
 router.put("/:recipeId", auth, restrictToOwner, updateRecipeById);
 router.delete("/:recipeId", auth, restrictToOwner, deleteRecipeById)
