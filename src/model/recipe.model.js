@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const ingredientSchema = new mongoose.Schema({
     name: {
@@ -33,11 +34,11 @@ const recipeSchema = new mongoose.Schema({
     },
     ingredients: [ingredientSchema],
     instructions: [instructionSchema],
-    prepTime: {
+    prepTimeInMinutes: {
         type: Number, // in minutes
         required: true,
     },
-    cookTime: {
+    cookTimeInMinutes: {
         type: Number, // in minutes
         required: true,
     },
@@ -64,7 +65,7 @@ const recipeSchema = new mongoose.Schema({
         default: "",
     },
     createdBy: {
-        type: mongoose.Types.ObjectId,
+        type: ObjectId,
         ref: "User",
         required: true,
     },

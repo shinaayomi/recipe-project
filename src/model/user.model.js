@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
+
 
 const userSchema = new mongoose.Schema({
     fullName: {
@@ -16,7 +18,7 @@ const userSchema = new mongoose.Schema({
     },
     recipes: [
         {
-            type: mongoose.Types.ObjectId,
+            type: ObjectId,
             ref: "Recipe"
         }
     ],
