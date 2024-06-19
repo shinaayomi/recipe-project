@@ -5,6 +5,12 @@ Functional Requirements
 - Users can categorize recipes ✅
 - Users can share recipes
 - Users can search recipes
+    - Search by category
+    - Search by difficulty
+    - Search ny title
+    - Random search
+    - Search by cookingTime and prepTime range
+    - Search by ingredients
 - Only recipe owner can modify/ update recipes
 - Only recipe owner can delete recipes
 - Users can comment/ rate recipes
