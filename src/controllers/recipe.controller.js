@@ -45,11 +45,23 @@ const createRecipe = async (req, res) => {
 
 const getAllRecipes = async (req, res) => {
     try {
-        const recipes = await Recipe.find({});
+        const { category, difficulty } = req.query;
+        let filter = {};
+
+        if (category) {
+            filter.category = category;
+        };
+
+        if (difficulty) {
+            filter.difficulty = difficulty;
+        }
+
+        const recipes = await Recipe.find(filter);
 
         return res.status(200).json({ 
             status: "success", 
             message: "Fetched Recipes successfully",
+            count: recipes.length,
             data: recipes 
         })
     } catch (error) {
@@ -93,7 +105,7 @@ const updateRecipeById = async (req, res) => {
             })
         };
 
-        res.status(200).json({
+        return res.status(200).json({
             status: "success", 
             data: updatedRecipe
         });
