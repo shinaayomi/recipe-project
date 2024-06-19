@@ -79,8 +79,35 @@ const getRecipeById = async (req, res) => {
         logger.error(error.message);
         return res.status(500).json({ status: "error", message: "Internal Server Error" })
     }
-}
+};
+
+const updateRecipeById = async (req, res) => {
+    try {
+        const { recipeId } = req.params;
+        const recipe = await Recipe.findById(recipeId);
+
+        if (!recipe) {
+            return res.status(404).json({
+                status: "error",
+                message: `Recipe with ID: ${recipeId} not found`
+            })
+        };
+
+        const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, req.body, { new: true });
+
+        res.status(200).json({
+            status: "success", 
+            data: updatedRecipe
+        });
+
+    } catch (error) {
+        logger.error(error.message);
+        return res.status(500).json({ status: "error", message:"Internal Server Error" })
+    }
+};
+
+
 
 module.exports = {
-    createRecipe, getAllRecipes, getRecipeById
+    createRecipe, getAllRecipes, getRecipeById, updateRecipeById
 }
