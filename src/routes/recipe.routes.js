@@ -4,7 +4,7 @@ const { createRecipe, getAllRecipes, getRecipeById } = require("../controllers/r
 const router = express.Router();
 
 router.post("/", auth, createRecipe);
-router.get("/", getAllRecipes);
-router.get("/:id", getRecipeById);
+router.get("/", auth, getAllRecipes);
+router.get("/:id", auth, getRecipeById);
 
 module.exports = router;
