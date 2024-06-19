@@ -1,7 +1,7 @@
 const Recipe = require("../model/recipe.model");
 const logger = require("../utils/logger");
 
-const createRecipe = async (req, res, next) => {
+const createRecipe = async (req, res) => {
     try {
         // check to ensure the title is unique
         const { title } = req.body;
@@ -39,10 +39,48 @@ const createRecipe = async (req, res, next) => {
        
     } catch (error) {
         logger.error(error.message);
-        res.status(500).json({ status: "error", message: "Internal Server Error" });
+        return res.status(500).json({ status: "error", message: "Internal Server Error" });
     }
 };
 
+const getAllRecipes = async (req, res) => {
+    try {
+        const recipes = await Recipe.find({});
+
+        return res.status(200).json({ 
+            status: "success", 
+            message: "Fetched Recipes successfully",
+            data: recipes 
+        })
+    } catch (error) {
+        logger.error(error.message);
+        return res.status(500).json({ status: "error", message: "Internal Server Error" })
+    };
+};
+
+const getRecipeById = async (req, res) => {
+    try {
+        const recipeId = req.params.id;
+        const recipe = await Recipe.findById(recipeId);
+
+        if (!recipe) {
+            return res.status(404).json({
+                status: "error", 
+                message: `Recipe with ID: ${recipeId} not found.`
+            });
+        };
+
+        return res.status(200).json({
+            status: "success",
+            message: "Fetched recipe successfully",
+            data: recipe
+        })
+    } catch (error) {
+        logger.error(error.message);
+        return res.status(500).json({ status: "error", message: "Internal Server Error" })
+    }
+}
+
 module.exports = {
-    createRecipe
+    createRecipe, getAllRecipes, getRecipeById
 }
