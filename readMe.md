@@ -23,8 +23,6 @@ Read below guidelines to follow the separation of concerns:
 
 8. Start your server and test the endpoint to create a new user.
 
-Incase of any challenge feel free to reach out on whatsapp: +254769789528 or email: fideliofidel9@gmail.com 
-
 Thank you for reading this guide.
 
 Happy Coding!
