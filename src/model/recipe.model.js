@@ -41,7 +41,7 @@ const recipeSchema = new mongoose.Schema({
         type: Number, // in minutes
         required: true,
     },
-    servings: {
+    numberOfServings: {
         type: Number,
         required: true,
     },
