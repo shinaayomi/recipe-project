@@ -84,16 +84,14 @@ const getRecipeById = async (req, res) => {
 const updateRecipeById = async (req, res) => {
     try {
         const { recipeId } = req.params;
-        const recipe = await Recipe.findById(recipeId);
+        const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, req.body, { new: true, runValidators: true });
 
-        if (!recipe) {
+        if (!updatedRecipe) {
             return res.status(404).json({
                 status: "error",
-                message: `Recipe with ID: ${recipeId} not found`
+                message: `Recipe with ID: ${recipeId} not found.`
             })
         };
-
-        const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, req.body, { new: true });
 
         res.status(200).json({
             status: "success", 
@@ -106,8 +104,29 @@ const updateRecipeById = async (req, res) => {
     }
 };
 
+const deleteRecipeById = async (req, res) => {
+    try {
+        const { recipeId } = req.params;
+        const deleteRecipe = await Recipe.findByIdAndDelete(recipeId);
 
+        if (!deleteRecipe) {
+            return res.status(404).json({
+                status: "error",
+                message: `Recipe with ID: ${recipeId} not found`
+            })
+        };
+
+        return res.status(200).json({
+            status: "success",
+            message: "Recipe deleted successfully"
+        });
+
+    } catch (error) {
+        logger.error(error.message);
+        return res.status(500).json({ status: "error", message: "Internal Server Error" })
+    }
+}
 
 module.exports = {
-    createRecipe, getAllRecipes, getRecipeById, updateRecipeById
+    createRecipe, getAllRecipes, getRecipeById, updateRecipeById, deleteRecipeById
 }
