@@ -45,7 +45,7 @@ const createRecipe = async (req, res) => {
 
 const getAllRecipes = async (req, res) => {
     try {
-        const { category, difficulty } = req.query;
+        const { category, difficulty, title, cookingTimeLow, cookingTimeHigh } = req.query;
         let filter = {};
 
         if (category) {
@@ -54,6 +54,18 @@ const getAllRecipes = async (req, res) => {
 
         if (difficulty) {
             filter.difficulty = difficulty;
+        };
+
+        if (title) {
+            filter.title = new RegExp(title, "i");
+        };
+
+        if (cookingTimeLow) {
+            filter.cookTimeInMinutes = { $gte: +cookingTimeLow }
+        }
+
+        if (cookingTimeHigh) {
+            filter.cookingTImeInMinutes = {...(filter.cookTimeInMinutes || {}), $lte: +cookingTimeHigh}
         }
 
         const recipes = await Recipe.find(filter);
