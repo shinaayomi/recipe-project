@@ -60,7 +60,7 @@ const login = async (req, res) => {
         };
 
         // generate token
-        const accessToken = await jwt.sign({ id: user._id }, config.JWT_SECRET, { expiresIn: 5 * 60 })
+        const accessToken = await jwt.sign({ id: user._id }, config.JWT_SECRET, { expiresIn: 50 * 60 })
 
         res.status(200).json({
             status: "success",
