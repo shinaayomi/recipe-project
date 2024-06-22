@@ -45,7 +45,7 @@ const createRecipe = async (req, res) => {
 
 const getAllRecipes = async (req, res) => {
     try {
-        const { category, difficulty, title, cookingTimeLow, cookingTimeHigh, minPrepTime, maxPrepTime, random } = req.query;
+        const { category, difficulty, title, cookingTimeLow, cookingTimeHigh, minPrepTime, maxPrepTime, random, ingredients } = req.query;
 
         let filter = {};
 
@@ -76,6 +76,11 @@ const getAllRecipes = async (req, res) => {
         if (maxPrepTime) {
             filter.prepTimeInMinutes = {...(filter.prepTimeInMinutes || {}), $lte: +maxPrepTime}
         };
+
+        if (ingredients) {
+            const ingredientList = ingredients.split(",");
+            filter["ingredients.name"] = { $all: ingredientList.map(ingredient => new RegExp(ingredient.trim(), "i")) };
+        }
 
         if (random) {
             const count = await Recipe.countDocuments(filter);
