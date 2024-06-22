@@ -45,7 +45,8 @@ const createRecipe = async (req, res) => {
 
 const getAllRecipes = async (req, res) => {
     try {
-        const { category, difficulty, title, cookingTimeLow, cookingTimeHigh, minPrepTime, maxPrepTime } = req.query;
+        const { category, difficulty, title, cookingTimeLow, cookingTimeHigh, minPrepTime, maxPrepTime, random } = req.query;
+
         let filter = {};
 
         if (category) {
@@ -75,6 +76,17 @@ const getAllRecipes = async (req, res) => {
         if (maxPrepTime) {
             filter.prepTimeInMinutes = {...(filter.prepTimeInMinutes || {}), $lte: +maxPrepTime}
         };
+
+        if (random) {
+            const count = await Recipe.countDocuments(filter);
+            const randomIndex = Math.floor(Math.random() * count);
+            const randomRecipe = await Recipe.findOne(filter).skip(randomIndex);
+            return res.status(200).json({
+                status: "success",
+                message: "Fetched Random Recipe successfully",
+                data: randomRecipe
+            });
+        }
 
         const recipes = await Recipe.find(filter);
 
