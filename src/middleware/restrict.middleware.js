@@ -3,7 +3,7 @@ const logger = require("../utils/logger");
 
 const restrictToOwner = async (req, res, next) => {
     try {
-        const { recipeId } = request.params;
+        const { recipeId } = req.params;
         const recipe = await Recipe.findById(recipeId);
 
         if (!recipe) {
@@ -13,7 +13,7 @@ const restrictToOwner = async (req, res, next) => {
             })
         }
 
-        if (recipe.createdBy.toString() !== req.user._id) {
+        if (String(recipe.createdBy) !== String(req.user._id)) {
             return res.status(403).json({
                 status: "error",
                 message: "Forbidden! You are not authorized to update this recipe"
@@ -23,7 +23,11 @@ const restrictToOwner = async (req, res, next) => {
         
         next();
     } catch (error) {
-        logger.error(error.message);
+        logger.error("Error in restrictToOwner middleware",error.message);
+        return res.status(500).json({
+            status: "error",
+            message: "Internal Server Error"
+        })
     }
 };
 
