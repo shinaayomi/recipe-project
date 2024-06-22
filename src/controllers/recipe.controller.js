@@ -45,7 +45,7 @@ const createRecipe = async (req, res) => {
 
 const getAllRecipes = async (req, res) => {
     try {
-        const { category, difficulty, title, cookingTimeLow, cookingTimeHigh } = req.query;
+        const { category, difficulty, title, cookingTimeLow, cookingTimeHigh, minPrepTime, maxPrepTime } = req.query;
         let filter = {};
 
         if (category) {
@@ -62,11 +62,19 @@ const getAllRecipes = async (req, res) => {
 
         if (cookingTimeLow) {
             filter.cookTimeInMinutes = { $gte: +cookingTimeLow }
-        }
+        };
 
         if (cookingTimeHigh) {
             filter.cookingTImeInMinutes = {...(filter.cookTimeInMinutes || {}), $lte: +cookingTimeHigh}
-        }
+        };
+
+        if (minPrepTime) {
+            filter.prepTimeInMinutes = { $gte: +minPrepTime };
+        };
+
+        if (maxPrepTime) {
+            filter.prepTimeInMinutes = {...(filter.prepTimeInMinutes || {}), $lte: +maxPrepTime}
+        };
 
         const recipes = await Recipe.find(filter);
 
