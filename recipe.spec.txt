@@ -18,10 +18,10 @@ Functional Requirements
 Non-Functional Requirements
 - Response time should be below 50ms
 - High availability upto 99.999
-- Error handling, ensure to respond with the accurate error message
-- Security, ensure all protected routes are guarded
-- A well organized code-base that is easy to understand and modify
-- API documentation for the endpoint usability
-- Best RESTful API design practices
+- Error handling, ensure to respond with the accurate error message ✅
+- Security, ensure all protected routes are guarded ✅
+- A well organized code-base that is easy to understand and modify ✅
+- API documentation for the endpoint usability ✅
+- Best RESTful API design practices ✅
 - Scalability, registered users, recipes and traffic
-- Observability: e.g morgan
+- Observability: e.g morgan ✅
